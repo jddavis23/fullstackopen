@@ -8,10 +8,38 @@ const Button = ({handleClick, text}) => (
 
 const Stats = ({feedback, stats}) => {
   return (
-  <div>{feedback} {stats}</div>
+  <table>
+    <tbody>
+      <tr>
+          <th>{feedback}</th>
+          <td>{stats}</td>
+      </tr>
+    </tbody>
+  </table>
+
 )
 }
 
+const Statistics = ({good, neutral, bad}) => {
+  const total = bad + good + neutral
+  if (total === 0)
+  {
+    return (
+      <div>No feedback given</div>
+    )
+  }
+  
+  return (
+    <div>
+      <Stats feedback='good' stats={good}/>
+      <Stats feedback='neutral' stats={neutral}/>
+      <Stats feedback='bad' stats={bad}/>
+      <Stats feedback='all' stats={total}/>
+      <Stats feedback='average' stats={((bad * -1) + (good * 1) + (neutral * 0)) / 3}/>
+      <Stats feedback='positive %' stats={(good/total) * 100}/>
+    </div>
+  )
+}
 
 
 const App = () => {
@@ -20,27 +48,21 @@ const App = () => {
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
 
-  console.log('ere')
+  // console.log('ere')
   const setToGood = () => {
-    // console.log('b4',{good})
     const update = good + 1
     setGood(update)
-    // console.log('aft',{good})
   }
   
   const setToNeutral = () => {
-    // console.log('b4',{neutral})
     const update = neutral + 1
     setNeutral(update)
-    // console.log('aft',{neutral}) //fix updating of states
 
   }
   
   const setToBad = () => {
-    // console.log('b4',{bad})
     const update = bad + 1
     setBad(update)
-    // console.log('aft',{bad})
 
   }
   return (
@@ -50,9 +72,7 @@ const App = () => {
       <Button handleClick={setToNeutral} text='neutral' />
       <Button handleClick={setToBad} text='bad' />
       <h1>statistics</h1>
-      <Stats feedback='good' stats={good}/>
-      <Stats feedback='neutral' stats={neutral}/>
-      <Stats feedback='bad' stats={bad}/>
+      <Statistics good={good} neutral={neutral} bad={bad}/>
     </div>
   )
 }
