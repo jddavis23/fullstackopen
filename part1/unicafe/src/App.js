@@ -6,6 +6,12 @@ const Button = ({handleClick, text}) => (
   </button>
 )
 
+const Stats = ({feedback, stats}) => {
+  return (
+  <div>{feedback} {stats}</div>
+)
+}
+
 
 
 const App = () => {
@@ -16,35 +22,37 @@ const App = () => {
 
   console.log('ere')
   const setToGood = () => {
-    console.log('b4',{good})
+    // console.log('b4',{good})
     const update = good + 1
     setGood(update)
-    console.log('aft',{good})
+    // console.log('aft',{good})
   }
   
   const setToNeutral = () => {
-    console.log('b4',{neutral})
+    // console.log('b4',{neutral})
     const update = neutral + 1
     setNeutral(update)
-    console.log('aft',{neutral}) //fix updating of states
+    // console.log('aft',{neutral}) //fix updating of states
 
   }
   
   const setToBad = () => {
-    console.log('b4',{bad})
+    // console.log('b4',{bad})
     const update = bad + 1
     setBad(update)
-    console.log('aft',{bad})
+    // console.log('aft',{bad})
 
   }
   return (
     <div>
-      <h1>
-          Unicafe
-      </h1>
+      <h1>Unicafe</h1>
       <Button handleClick={setToGood} text='good' />
       <Button handleClick={setToNeutral} text='neutral' />
       <Button handleClick={setToBad} text='bad' />
+      <h1>statistics</h1>
+      <Stats feedback='good' stats={good}/>
+      <Stats feedback='neutral' stats={neutral}/>
+      <Stats feedback='bad' stats={bad}/>
     </div>
   )
 }
