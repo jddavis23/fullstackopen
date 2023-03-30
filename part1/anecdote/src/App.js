@@ -10,9 +10,24 @@ const Button = ({handleClick, text}) => {
   )
 }
 
+const MostVotes = ({anec, maxi, selected}) => {
+
+  return(
+    <div>
+      <h1>
+        Anecdote with the most votes
+      </h1>
+      {anec[selected]}
+      <br/>
+      has {maxi} votes
+    </div>
+  )
+}
+
 const App = () => {
   const [votes, setVotes] = useState([0,0,0,0,0,0,0,0])
-
+  const [maxi, setMax] = useState(0)
+  const [anMax, setAnMax] = useState(0)
   const anecdotes = [
     'If it hurts, do it more often.',
     'Adding manpower to a late software project makes it later!',
@@ -34,6 +49,13 @@ const App = () => {
     const newvotes = {...votes}
     console.log(selected, 'before',votes[0],votes[1],votes[2],votes[3],votes[4],votes[5],votes[6],votes[7])
     newvotes[selected] += 1
+    if (newvotes[selected] > maxi)
+    {
+      setMax(newvotes[selected])
+      setAnMax(selected)
+    }
+    console.log('prob')
+
     console.log(selected, 'before',newvotes[0],newvotes[1],newvotes[2],newvotes[3],newvotes[4],newvotes[5],newvotes[6],newvotes[7])
     setVotes(newvotes)
   }
@@ -46,6 +68,7 @@ const App = () => {
       <br/>
       <Button handleClick={choose} text={'next anecdote'}/>
       <Button handleClick={addCount} text={'vote'}/>
+      <MostVotes anec={anecdotes} maxi={maxi} selected={anMax} />
     </div>
   )
 }
