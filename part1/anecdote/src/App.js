@@ -1,14 +1,18 @@
 import { useState } from 'react'
 
 
-const Button = ({handleClick}) => {
+const Button = ({handleClick, text}) => {
   return (
-    <button onClick={handleClick}>next anecdote
-    </button>
+    <>
+      <button onClick={handleClick}>{text}
+      </button>
+    </>
   )
 }
 
 const App = () => {
+  const [votes, setVotes] = useState([0,0,0,0,0,0,0,0])
+
   const anecdotes = [
     'If it hurts, do it more often.',
     'Adding manpower to a late software project makes it later!',
@@ -23,14 +27,25 @@ const App = () => {
   const [selected, setSelected] = useState(0)
   
   const choose = () => {
-    const newsltd = Math.floor(Math.random() * 7)
-    console.log(newsltd)
-    setSelected(newsltd)
+    setSelected(Math.floor(Math.random() * 7))
   }
+
+  const addCount = () => {
+    const newvotes = {...votes}
+    console.log(selected, 'before',votes[0],votes[1],votes[2],votes[3],votes[4],votes[5],votes[6],votes[7])
+    newvotes[selected] += 1
+    console.log(selected, 'before',newvotes[0],newvotes[1],newvotes[2],newvotes[3],newvotes[4],newvotes[5],newvotes[6],newvotes[7])
+    setVotes(newvotes)
+  }
+  
   return (
     <div>
       {anecdotes[selected]}
-      <Button handleClick={choose}/>
+      <br/>
+        has {votes[selected]} votes
+      <br/>
+      <Button handleClick={choose} text={'next anecdote'}/>
+      <Button handleClick={addCount} text={'vote'}/>
     </div>
   )
 }
