@@ -1,5 +1,8 @@
-const Parts = ({ head }) => {
-    console.log(head)
+// import { useState } from 'react'
+
+const Parts = ({ head, total, setTotal }) => {
+    // console.log(head)
+    // setTotal(total + head.exercises)
     return(
         <li>
             {head.name} {head.exercises}
@@ -9,18 +12,19 @@ const Parts = ({ head }) => {
 
 
 const Course = ({course}) => {
-    console.log(course.name)
-    const np = course.parts
-    console.log(np[0].id)
-
-    // console.log(course.parts)
+    const total = course.parts.reduce((currentValue, element) => {
+        return element.exercises + currentValue
+    }, 0);
+    console.log(total)
     return(
         <div>
             <h1>{course.name}</h1>
             <ul>
                 {course.parts.map(nps => 
-                 <Parts key={nps.id} head={nps} />)}
+                 <Parts key={nps.id} head={nps} />
+                 )}
             </ul>
+            <h4>total of {total} exercises</h4>
         </div>
     )
 }
