@@ -1,8 +1,6 @@
 // import { useState } from 'react'
 
 const Parts = ({ head, total, setTotal }) => {
-    // console.log(head)
-    // setTotal(total + head.exercises)
     return(
         <li>
             {head.name} {head.exercises}
