@@ -8,17 +8,17 @@ const Parts = ({ head, total, setTotal }) => {
     )
 }
 
-
-const Course = ({course}) => {
-    const total = course.parts.reduce((currentValue, element) => {
+const Singlecourse = ({header, parts}) => {
+    console.log(header)
+    const total = parts.reduce((currentValue, element) => {
         return element.exercises + currentValue
     }, 0);
     console.log(total)
-    return(
+    return (
         <div>
-            <h1>{course.name}</h1>
+            <h1>{header}</h1>
             <ul>
-                {course.parts.map(nps => 
+                {parts.map(nps => 
                  <Parts key={nps.id} head={nps} />
                  )}
             </ul>
@@ -26,6 +26,20 @@ const Course = ({course}) => {
         </div>
     )
 }
+
+const Course = ({course}) => {
+    return(
+        <div>
+            <ul>
+            {course.map(course =>
+                <Singlecourse key={course.id} header={course.name} parts={course.parts} />
+            )}
+            </ul>
+        </div>    
+    )
+}
+
+
 
 
 
