@@ -51,17 +51,12 @@ const App = () => {
   }
 
   const handleSearch = (event) => {
-    //console.log(event.target.value)
     setSearchName(event.target.value)
-    const reducer = persons.filter((el) => el.name.toLowerCase().includes(searchName.toLowerCase()))
+    const reducer = persons.filter((el) => el.name.toLowerCase().includes(event.target.value.toLowerCase()))
     console.log(reducer)
     setSearchList(reducer)
-    // return(
-    //   {personsToShow.map(person =>
-    //   <li key={person.name}>
-    //     {person.name} {person.number}
-    //   </li>
-    // )}
+    if (event.target.value.length === 0)
+      setSearchList([])
   }
 
 
