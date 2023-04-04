@@ -3,6 +3,7 @@ import Search from './components/Search'
 import Save from './components/Save'
 import Display from './components/Display'
 import axios from 'axios'
+import personsService from './services/persons'
 
 const App = () => {
   const [persons, setPersons] = useState([])
@@ -13,16 +14,13 @@ const App = () => {
 
   useEffect(() => {
     console.log('we in')
-    axios
-    .get("http://localhost:3001/persons")
-    .then(response => {
-      console.log('successful')
-      setPersons(response.data)
-    })},[])
-    console.log('rendered', persons.length, 'length')
+    personsService
+    .getAll()
+    .then(all => setPersons(all))
+  },[])
+  console.log('rendered', persons.length, 'length')
 
   const ShallowEqual = () => {
-    //console.log(persons.length)
     for (let i = 0; i < persons.length; i++) {
       if (newName === persons[i].name) {
         return persons[i]
@@ -41,11 +39,15 @@ const App = () => {
     const personObject = {
       name: newName,
       number: newNumber,
-      id: persons.length + 1
     }
-    setPersons(persons.concat(personObject))
-    setNewName('')
-    setNewNumber('')
+    personsService
+    .create(personObject)
+    .then(all => {
+      setPersons(persons.concat(all))
+      setNewName('')
+      setNewNumber('')
+    })
+ 
   }
  
   const handleNameChange = (event) => {
@@ -65,6 +67,13 @@ const App = () => {
       setSearchList([])
   }
 
+  const deletePerson = id => {
+    const url = `http://localhost:3001/persons/${id}`
+    const note = persons.find(n => n.id === id)
+    const changedNote = { ...note, important: !note.important }
+  
+    personsService.update()
+  }
 
   return (
     <div>
@@ -73,7 +82,7 @@ const App = () => {
       <Save newName={newName} newNumber={newNumber} handleNameChange={handleNameChange} 
       handleNumberAdd={handleNumberAdd} addName={addName}/>
       <h2>Numbers</h2>
-      <Display searchList={searchList}/>
+      <Display searchList={searchList} deletePerson={() => deletePerson(persons.id)}/>
     </div>
   )
 }
