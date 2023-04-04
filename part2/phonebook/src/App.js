@@ -43,7 +43,7 @@ const App = () => {
     personsService
     .create(personObject)
     .then(all => {
-      setPersons(persons.concat(all))
+      setPersons(all)
       setNewName('')
       setNewNumber('')
     })
@@ -70,9 +70,14 @@ const App = () => {
   const deletePerson = id => {
     const url = `http://localhost:3001/persons/${id}`
     const note = persons.find(n => n.id === id)
-    const changedNote = { ...note, important: !note.important }
-  
-    personsService.update()
+    const changedNote = persons.filter(all => all.id !== id)
+    axios
+    .delete(url)
+    .then(response => {
+      console.log(response)
+      setPersons(persons.map(all => all.id !== id))
+    })
+
   }
 
   return (
@@ -82,7 +87,7 @@ const App = () => {
       <Save newName={newName} newNumber={newNumber} handleNameChange={handleNameChange} 
       handleNumberAdd={handleNumberAdd} addName={addName}/>
       <h2>Numbers</h2>
-      <Display searchList={searchList} deletePerson={() => deletePerson(persons.id)}/>
+      <Display searchList={searchList} deletePerson={deletePerson}/>
     </div>
   )
 }
