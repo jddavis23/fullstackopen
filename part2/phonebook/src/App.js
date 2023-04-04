@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Search from './components/Search'
 import Save from './components/Save'
+import Display from './components/Display'
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -66,11 +67,7 @@ const App = () => {
       <Save newName={newName} newNumber={newNumber} handleNameChange={handleNameChange} 
       handleNumberAdd={handleNumberAdd} addName={addName}/>
       <h2>Numbers</h2>
-      {searchList.map(person =>
-        <li key={person.name}>
-          {person.name} {person.number}
-        </li>
-      )}
+      <Display searchList={searchList}/>
     </div>
   )
 }
