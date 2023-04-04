@@ -1,5 +1,6 @@
 import { useState } from 'react'
-
+import Search from './components/Search'
+import Save from './components/Save'
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -41,12 +42,10 @@ const App = () => {
   }
  
   const handleNameChange = (event) => {
-    //console.log(event.target.value)
     setNewName(event.target.value)
   }
 
   const handleNumberAdd = (event) => {
-    //console.log(event.target.value)
     setNewNumber(event.target.value)
   }
 
@@ -63,23 +62,9 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <form>
-        <div>
-          name: <input value={searchName} onChange={handleSearch}/>
-        </div>
-      </form>
-      <form onSubmit={addName}>
-        <h2>Add new</h2>
-        <div>
-          name: <input value={newName} onChange={handleNameChange}/>
-        </div>
-        <div>
-          number: <input value={newNumber} onChange={handleNumberAdd}/>
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <Search searchName={searchName} handleSearch={handleSearch}/>
+      <Save newName={newName} newNumber={newNumber} handleNameChange={handleNameChange} 
+      handleNumberAdd={handleNumberAdd} addName={addName}/>
       <h2>Numbers</h2>
       {searchList.map(person =>
         <li key={person.name}>
