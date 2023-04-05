@@ -67,16 +67,19 @@ const App = () => {
   }
 
   const deletePerson = id => {
-    const url = `http://localhost:3001/persons/${id}`
     const note = persons.find(n => n.id === id)
-    const changedNote = persons.filter(all => all.id !== id)
-    axios
-    .delete(url)
-    .then(response => {
-      //console.log('resp',response)
-      setPersons(persons.map(all => all.id !== id))
-      setSearchList(searchList.filter(all => all.id !== id))
-    })
+    if (window.confirm(`Delete ${note.name}?`))
+    {
+      const url = `http://localhost:3001/persons/${id}`
+      const changedNote = persons.filter(all => all.id !== id)
+      personsService
+      .dlete(url)
+      .then(() => {
+        //console.log('resp',response)
+        setPersons(persons.map(all => all.id !== id))
+        setSearchList(searchList.filter(all => all.id !== id))
+      })
+    }
 
   }
 
