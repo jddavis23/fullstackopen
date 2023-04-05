@@ -13,12 +13,11 @@ const App = () => {
   const [searchList, setSearchList] = useState([])
 
   useEffect(() => {
-    console.log('we in')
     personsService
     .getAll()
     .then(all => setPersons(all))
   },[])
-  console.log('rendered', persons.length, 'length')
+  //console.log('rendered', persons.length, persons, 'length')
 
   const ShallowEqual = () => {
     for (let i = 0; i < persons.length; i++) {
@@ -43,7 +42,7 @@ const App = () => {
     personsService
     .create(personObject)
     .then(all => {
-      setPersons(all)
+      setPersons(persons.concat(all))
       setNewName('')
       setNewNumber('')
     })
@@ -74,8 +73,9 @@ const App = () => {
     axios
     .delete(url)
     .then(response => {
-      console.log(response)
+      //console.log('resp',response)
       setPersons(persons.map(all => all.id !== id))
+      setSearchList(searchList.filter(all => all.id !== id))
     })
 
   }
