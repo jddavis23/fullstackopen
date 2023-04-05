@@ -30,9 +30,20 @@ const App = () => {
 
   const addName = (event) => {
     event.preventDefault()
-    if (ShallowEqual())
+    const cpy = ShallowEqual()
+    if (cpy)
     {
-      alert(newName + ' is already added to phonebook')
+      const changePerson = {...cpy, number: newNumber}
+      if (window.confirm(`${cpy.name} is already is saved. Would you like to change their number?`))
+      {
+        personsService.update(cpy.id, changePerson)
+        .then(returnedPerson => {
+          setPersons(persons.map(person => person.id !== cpy.id ? person : returnedPerson))
+          setNewName('')
+          setNewNumber('')
+          setSearchList(searchList.map(person => person.id !== cpy.id ? person : returnedPerson))
+        })
+      }
       return
     }
     const personObject = {
@@ -46,7 +57,6 @@ const App = () => {
       setNewName('')
       setNewNumber('')
     })
- 
   }
  
   const handleNameChange = (event) => {
@@ -60,7 +70,7 @@ const App = () => {
   const handleSearch = (event) => {
     setSearchName(event.target.value)
     const reducer = persons.filter((el) => el.name.toLowerCase().includes(event.target.value.toLowerCase()))
-    console.log(reducer)
+    //console.log(reducer)
     setSearchList(reducer)
     if (event.target.value.length === 0)
       setSearchList([])
