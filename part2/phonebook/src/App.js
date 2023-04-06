@@ -89,6 +89,10 @@ const App = () => {
         setPersons(persons.map(all => all.id !== id))
         setSearchList(searchList.filter(all => all.id !== id))
       })
+      .catch(error => {
+        alert(`${note.name} has already been deleted`)
+        setSearchList(searchList.filter(all => all.id !== id))
+      })
     }
 
   }
