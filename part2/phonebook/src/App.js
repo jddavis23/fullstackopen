@@ -13,7 +13,7 @@ const App = () => {
   const [searchName, setSearchName] = useState('')
   const [searchList, setSearchList] = useState([])
   const [errorMessage, setErrorMessage] = useState(null)
-
+  const [check, setCheck] = useState(null)
 
   useEffect(() => {
     personsService
@@ -45,6 +45,11 @@ const App = () => {
           setNewName('')
           setNewNumber('')
           setSearchList(searchList.map(person => person.id !== cpy.id ? person : returnedPerson))
+          setErrorMessage(`Updated ${cpy.name}'s number`)
+          setCheck('update')
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 5000)
         })
       }
       return
@@ -59,6 +64,11 @@ const App = () => {
       setPersons(persons.concat(all))
       setNewName('')
       setNewNumber('')
+      setErrorMessage(`Added ${newName}`)
+          setCheck('update')
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 5000)
     })
   }
  
@@ -96,6 +106,7 @@ const App = () => {
         setErrorMessage(
           `Note '${note.name}' was already removed from the phonebook`
         )
+        setCheck('error')
         setTimeout(() => {
           setErrorMessage(null)
         }, 5000)
@@ -108,7 +119,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <Notification message={errorMessage} />
+      <Notification message={errorMessage} check={check}/>
       <Search searchName={searchName} handleSearch={handleSearch}/>
       <Save newName={newName} newNumber={newNumber} handleNameChange={handleNameChange} 
       handleNumberAdd={handleNumberAdd} addName={addName}/>
