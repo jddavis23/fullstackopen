@@ -4,6 +4,7 @@ import Save from './components/Save'
 import Display from './components/Display'
 import axios from 'axios'
 import personsService from './services/persons'
+import Notification from './components/Notification'
 
 const App = () => {
   const [persons, setPersons] = useState([])
@@ -11,6 +12,8 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   const [searchName, setSearchName] = useState('')
   const [searchList, setSearchList] = useState([])
+  const [errorMessage, setErrorMessage] = useState(null)
+
 
   useEffect(() => {
     personsService
@@ -90,7 +93,12 @@ const App = () => {
         setSearchList(searchList.filter(all => all.id !== id))
       })
       .catch(error => {
-        alert(`${note.name} has already been deleted`)
+        setErrorMessage(
+          `Note '${note.name}' was already removed from the phonebook`
+        )
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
         setSearchList(searchList.filter(all => all.id !== id))
       })
     }
@@ -100,6 +108,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={errorMessage} />
       <Search searchName={searchName} handleSearch={handleSearch}/>
       <Save newName={newName} newNumber={newNumber} handleNameChange={handleNameChange} 
       handleNumberAdd={handleNumberAdd} addName={addName}/>
