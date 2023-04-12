@@ -2,7 +2,6 @@ import { useState,useEffect } from 'react'
 import Search from './components/Search'
 import Save from './components/Save'
 import Display from './components/Display'
-import axios from 'axios'
 import personsService from './services/persons'
 import Notification from './components/Notification'
 
@@ -94,7 +93,6 @@ const App = () => {
     if (window.confirm(`Delete ${note.name}?`))
     {
       const url = `http://localhost:3001/persons/${id}`
-      const changedNote = persons.filter(all => all.id !== id)
       personsService
       .dlete(url)
       .then(() => {
