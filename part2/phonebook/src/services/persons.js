@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const baseUrl = 'http://localhost:3001/persons'
+const baseUrl = 'http://localhost:3001/api/persons'
 
 const getAll = () => {
     const request = axios.get(baseUrl)
@@ -22,4 +22,5 @@ const dlete = (dUrl) => {
     return request.then(response => response)
 }
 
+// eslint-disable-next-line
 export default { getAll, create, update, dlete }
